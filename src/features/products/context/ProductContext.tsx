@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useMemo } from "react";
-import { Product, ProductContextType } from "../types/products.type";
+import { Product, ProductContextType } from "../types/products.types";
 
 interface ProductsProviderProps {
   children: ReactNode;

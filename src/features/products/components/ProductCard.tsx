@@ -1,4 +1,4 @@
-import { Product } from "@/types/products.type";
+import { Product } from "@/features/products/types/products.types";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 

@@ -1,5 +1,5 @@
-import { ProductContext } from "@/context/ProductContext";
-import { Product } from "@/types/products.type";
+import { ProductContext } from "@/features/products/context/ProductContext";
+import { Product } from "@/features/products/types/products.types";
 import React, { useContext, useState } from "react";
 import { FlatList, View } from "react-native";
 import ProductCard from "./ProductCard";

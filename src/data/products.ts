@@ -1,4 +1,4 @@
-import { Product } from "@/types/products.type";
+import { Product } from "@/features/products/types/products.types";
 
 export const STATIC_PRODUCTS: Product[] = [
   {

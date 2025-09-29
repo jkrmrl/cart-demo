@@ -1,15 +1,31 @@
 import { STATIC_PRODUCTS } from "@/data/products";
+import { CartIconButton } from "@/features/cart/components/CartIconButton";
+import { CartProvider } from "@/features/cart/context/CartContext";
+import { ProductProvider } from "@/features/products/context/ProductContext";
 import { Stack } from "expo-router";
 import React from "react";
 import "../global.css";
-import { ProductProvider } from "../src/context/ProductContext";
 
 export default function RootLayout() {
   return (
     <ProductProvider initialProducts={STATIC_PRODUCTS}>
-      <Stack>
-        <Stack.Screen name="index" options={{ title: "Products" }} />
-      </Stack>
+      <CartProvider>
+        <Stack
+          screenOptions={{
+            headerShown: true,
+            headerTitleAlign: "center",
+          }}
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "Products",
+              headerRight: () => <CartIconButton />,
+            }}
+          />
+          <Stack.Screen name="cart" options={{ title: "Cart" }} />
+        </Stack>
+      </CartProvider>
     </ProductProvider>
   );
 }
