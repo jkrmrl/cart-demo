@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { createContext, ReactNode, useMemo, useReducer } from "react";
+import { cartReducer } from "../reducers/cart.reducers";
 import { CartContextType, CartState } from "../types/cart.types";
 
 interface CartProviderProps {
@@ -14,13 +15,14 @@ export const CartProvider = ({
   children,
   initialCart = { items: [], voucherCode: null, discountRate: 0 },
 }: CartProviderProps) => {
-  const [cart, setCart] = useState<CartState>(initialCart);
+  const [cart, dispatch] = useReducer(cartReducer, initialCart);
 
   const contextValue: CartContextType = useMemo(
     () => ({
       cart,
+      dispatch,
     }),
-    [cart]
+    [cart, dispatch]
   );
 
   return (

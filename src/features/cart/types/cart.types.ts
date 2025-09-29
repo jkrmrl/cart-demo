@@ -11,6 +11,16 @@ export interface CartState {
   discountRate: number;
 }
 
+export type CartAction =
+  | { type: "ADD_TO_CART"; payload: Product }
+  | {
+      type: "UPDATE_QUANTITY";
+      payload: { productId: string; quantity: number };
+    }
+  | { type: "REMOVE_ITEM"; payload: { productId: string } }
+  | { type: "APPLY_VOUCHER"; payload: { code: string; discountRate: number } };
+
 export interface CartContextType {
   cart: CartState;
+  dispatch: React.Dispatch<CartAction>;
 }

@@ -1,4 +1,6 @@
+import { CartContext } from "@/features/cart/context/CartContext";
 import { Product } from "@/features/products/types/products.types";
+import { useContext } from "react";
 import {
   Modal,
   Pressable,
@@ -18,6 +20,16 @@ export default function ProductModal({
   product,
   onClose,
 }: ProductModalProps) {
+  const cartContext = useContext(CartContext);
+  const dispatch = cartContext?.dispatch;
+
+  const handleAddtoCart = () => {
+    if (product && dispatch) {
+      dispatch({ type: "ADD_TO_CART", payload: product });
+      onClose();
+    }
+  };
+
   return (
     <Modal transparent visible={visible}>
       <TouchableWithoutFeedback onPress={onClose}>
@@ -34,7 +46,10 @@ export default function ProductModal({
           <Text className="mb-6 text-gray-500 text-justify">
             {product?.description}
           </Text>
-          <Pressable className="p-2 items-center bg-orange-500 rounded-lg">
+          <Pressable
+            onPress={handleAddtoCart}
+            className="p-2 items-center bg-orange-500 rounded-lg"
+          >
             <Text className="text-white font-bold text-lg">Add to Cart</Text>
           </Pressable>
         </View>
