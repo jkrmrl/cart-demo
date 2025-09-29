@@ -23,6 +23,21 @@ export const cartReducer = (state: CartState, action: CartAction) => {
       return { ...state, items: [...state.items, newItem] };
     }
 
+    case "UPDATE_QUANTITY": {
+      const { productId, quantity } = action.payload;
+
+      const newItems = state.items.flatMap((item) => {
+        if (item.product.id === productId) {
+          if (quantity <= 0) {
+            return [];
+          }
+          return [{ ...item, quantity }];
+        }
+        return [item];
+      });
+      return { ...state, items: newItems };
+    }
+
     default:
       return state;
   }
