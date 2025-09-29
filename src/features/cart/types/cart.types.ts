@@ -17,7 +17,6 @@ export type CartAction =
       type: "UPDATE_QUANTITY";
       payload: { productId: string; quantity: number };
     }
-  | { type: "REMOVE_ITEM"; payload: { productId: string } }
   | { type: "APPLY_VOUCHER"; payload: { code: string; discountRate: number } };
 
 export interface CartContextType {

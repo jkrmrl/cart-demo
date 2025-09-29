@@ -35,7 +35,25 @@ export const cartReducer = (state: CartState, action: CartAction) => {
         }
         return [item];
       });
-      return { ...state, items: newItems };
+
+      const isCartNowEmpty = newItems.length === 0;
+
+      return {
+        ...state,
+        items: newItems,
+        voucherCode: isCartNowEmpty ? null : state.voucherCode,
+        discountRate: isCartNowEmpty ? 0 : state.discountRate,
+      };
+    }
+
+    case "APPLY_VOUCHER": {
+      const { code, discountRate } = action.payload;
+
+      return {
+        ...state,
+        voucherCode: code,
+        discountRate: discountRate,
+      };
     }
 
     default:
