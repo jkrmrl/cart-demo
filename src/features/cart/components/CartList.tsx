@@ -21,7 +21,7 @@ export default function CartList() {
   }
 
   return (
-    <View className="flex-1 bg-whit epx-4 pt-6">
+    <View className="flex-1 bg-white px-4 pt-6">
       <FlatList
         data={cart.items}
         keyExtractor={(item) => item.product.id}

@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,7 +7,6 @@ import {
   ScrollView,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { CartContext } from "../context/CartContext";
@@ -16,15 +15,19 @@ export default function CartSummary() {
   const cartContext = useContext(CartContext);
   const cart = cartContext?.cart;
   const dispatch = cartContext?.dispatch;
-
-  const voucherInputRef = useRef<string>("");
+  const voucherInputRef = useRef<TextInput | null>(null);
+  const voucherTextRef = useRef<string>("");
 
   const subtotal = cart?.items.reduce((sum, item) => {
     return sum + item.product.price * item.quantity;
   }, 0);
 
+  useEffect(() => {
+    voucherInputRef.current?.focus();
+  }, []);
+
   const handleApplyVoucher = () => {
-    const code = voucherInputRef.current.trim().toUpperCase();
+    const code = voucherTextRef.current.trim().toUpperCase();
 
     if (code === "DISCOUNT10") {
       dispatch?.({
@@ -43,26 +46,23 @@ export default function CartSummary() {
   const totalAmount = subtotal ? subtotal - discountAmount : 0;
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <Pressable onPress={Keyboard.dismiss} className="flex-1 w-full">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={80}
-        style={{ flex: 1, width: "100%" }}
+        className="flex-1 w-full"
       >
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: "flex-end",
-          }}
-          keyboardShouldPersistTaps="handled"
-        >
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View className="w-full bg-white p-8 border-t border-gray-200 shadow-md">
             <View className="flex-col justify-between mb-4">
               <TextInput
+                ref={voucherInputRef}
                 placeholder="Enter Voucher Code"
                 placeholderTextColor="#4B5563"
                 className="w-full mb-4 p-2 text-sm rounded-lg border border-gray-300"
-                onChangeText={(text) => (voucherInputRef.current = text)}
+                onChangeText={(text) => {
+                  voucherTextRef.current = text;
+                }}
               />
               <Pressable
                 onPress={handleApplyVoucher}
@@ -111,6 +111,6 @@ export default function CartSummary() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 }

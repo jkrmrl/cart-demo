@@ -28,7 +28,7 @@ export default function ProductList() {
   };
 
   return (
-    <View>
+    <View className="bg-white">
       <FlatList
         data={products}
         keyExtractor={(item: { id: any }) => item.id}

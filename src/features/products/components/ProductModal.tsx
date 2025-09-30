@@ -1,13 +1,7 @@
 import { CartContext } from "@/features/cart/context/CartContext";
 import { Product } from "@/features/products/types/products.types";
 import { useContext } from "react";
-import {
-  Modal,
-  Pressable,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 
 interface ProductModalProps {
   visible: boolean;
@@ -32,9 +26,12 @@ export default function ProductModal({
 
   return (
     <Modal transparent visible={visible}>
-      <TouchableWithoutFeedback onPress={onClose}>
+      <Pressable
+        onPress={onClose}
+        className="absolute top-0 left-0 right-0 bottom-0"
+      >
         <View className="flex-1 bg-black/60" />
-      </TouchableWithoutFeedback>
+      </Pressable>
       <View className="flex p-6 justify-center items-center absolute inset-0">
         <View className="p-6 bg-white rounded-3xl">
           <Text className="mb-2 text-2xl font-bold">
